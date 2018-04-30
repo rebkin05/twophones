@@ -1,6 +1,9 @@
 from django.shortcuts import render
-
-# Create your views here.
+from django.utils import timezone
+from .models import ThingEntry
 
 def phones_home(request):
-    return render(request, 'twophones/phones_home.html', {})
+    twothings = ThingEntry.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    return render(request, 'twophones/phones_home.html', {'twothings': twothings})
+
+
